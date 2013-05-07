@@ -1,6 +1,8 @@
 (ns slitrace.camera
   (:use slimath.core)
-  (:use sligeom.core))
+  (:use sligeom.core)
+  (:use sligeom.transform)
+  (:use [sligeom.intersect :only [ray]]))
 
 (defn camera-ray 
   "Create a ray in camera-space from a screne-space coordinate using the 
