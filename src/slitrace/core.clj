@@ -1,4 +1,6 @@
-(ns slitrace.core)
+(ns slitrace.core
+  (:use sligeom.core)
+  (:import [sligeom.core Ray]))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
