@@ -1,4 +1,4 @@
-(defproject slitrace "0.1.2"
+(defproject slitrace "0.1.3"
   :description "A suite of ray-tracing tools."
   :url "http://sliplanesoftware.com"
   :license {:name "Eclipse Public License"
