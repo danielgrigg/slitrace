@@ -1,7 +1,7 @@
 (ns slitrace.prim
   (:use slitrace.core)
   (:use sligeom.core)
-  (:import [sligeom.core Transform]))
+  (:import [sligeom.core Transform BBox Ray]))
 
 (defrecord Instance [^Transform transform primitive ]
   Traceable
@@ -32,7 +32,7 @@
 
 ;; TODO - bounding box
 (defn list-group [^Transform transform primitives]
-  (PrimitiveList. transform nil primitives))
+  (ListGroup. transform nil primitives))
 
 ;; TODO - choose a grouping strategy based on primitives
 (defn group [^Transform transform primitives]
