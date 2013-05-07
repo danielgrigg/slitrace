@@ -1,12 +1,12 @@
 (ns slitrace.shape
   (:use slimath.core)
-  (:use [sligeom.core :only [ray-at 
-                             intersect-sphere-ray 
-                             intersect-triangle-ray 
-                             bbox
-                             bbox-union
-                             point3]])
-  (:import (sligeom.core Bounded))
+  (:use sligeom.core)
+  (:use sligeom.transform)
+  (:use sligeom.bounding)
+  (:use [sligeom.intersect :only [ray-at 
+                                  intersect-sphere-ray 
+                                  intersect-triangle-ray]])
+  (:import (sligeom.bounding.Bounded))
   (:use slitrace.core)
   (:import (slitrace.core.Traceable)))
 
