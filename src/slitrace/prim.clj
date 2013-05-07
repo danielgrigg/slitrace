@@ -1,7 +1,12 @@
 (ns slitrace.prim
   (:use slitrace.core)
   (:use sligeom.core)
-  (:import [sligeom.core Transform BBox Ray]))
+  (:use sligeom.bounding)
+  (:use sligeom.transform)
+  (:use sligeom.intersect)
+  (:import [sligeom.intersect Ray])
+  (:import [sligeom.bounding BBox])
+  (:import [sligeom.transform Transform]))
 
 (defrecord Instance [^Transform transform primitive ]
   Traceable
