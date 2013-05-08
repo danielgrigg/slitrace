@@ -1,12 +1,9 @@
 (ns slitrace.prim
-  (:use slitrace.core)
-  (:use sligeom.core)
-  (:use sligeom.bounding)
-  (:use sligeom.transform)
-  (:use sligeom.intersect)
-  (:import [sligeom.intersect Ray])
-  (:import [sligeom.bounding BBox])
-  (:import [sligeom.transform Transform]))
+  (:use [slitrace core]
+        [sligeom core bounding transform intersect])
+  (:import [sligeom.intersect Ray]
+           [sligeom.bounding BBox]
+           [sligeom.transform Transform]))
 
 (defrecord Instance [^Transform transform primitive ]
   Traceable
@@ -20,8 +17,8 @@
     (transform (bounding-box primitive) transform)))
 
 (defn instance [^Transform T primitive]
+  "Create an instanced primitive"
   (Instance. T primitive))
-
 
 (deftype ListGroup [^Transform transform ^BBox bounds primitives]
   Traceable
@@ -33,13 +30,16 @@
                              [(.maxt r-local) nil nil]
                              primitives)]
       (if pn
-        [tn (transform-point pn transform) (transform-normal nn transform)]))))
+        [tn (transform-point pn transform) 
+         (transform-normal nn transform)]))))
 
 ;; TODO - bounding box
-(defn list-group [^Transform transform primitives]
+(defn- list-group [^Transform transform primitives]
+  "Create a primitive group as a list"
   (ListGroup. transform nil primitives))
 
 ;; TODO - choose a grouping strategy based on primitives
 (defn group [^Transform transform primitives]
+  "Create a primitive group"
   (list-group transform primitives))
 

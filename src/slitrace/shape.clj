@@ -1,14 +1,11 @@
 (ns slitrace.shape
-  (:use slimath.core)
-  (:use sligeom.core)
-  (:use sligeom.transform)
-  (:use sligeom.bounding)
-  (:use [sligeom.intersect :only [ray-at 
+  (:use [slimath core]
+        [sligeom core]
+        [sligeom transform bounding]
+        [sligeom.intersect :only [ray-at 
                                   intersect-sphere-ray 
-                                  intersect-triangle-ray]])
-  (:import (sligeom.bounding.Bounded))
-  (:use slitrace.core)
-  (:import (slitrace.core.Traceable)))
+                                  intersect-triangle-ray]]
+        [slitrace core]))
 
 (defrecord Sphere [^double radius]
   Traceable

@@ -1,5 +1,5 @@
 (ns slitrace.core
-  (:use sligeom.intersect)
+  (:use [sligeom intersect])
   (:import [sligeom.intersect Ray]))
 
 (set! *warn-on-reflection* true)
