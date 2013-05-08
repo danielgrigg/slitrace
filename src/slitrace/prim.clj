@@ -5,16 +5,16 @@
            [sligeom.bounding BBox]
            [sligeom.transform Transform]))
 
-(defrecord Instance [^Transform transform primitive ]
+(defrecord Instance [^Transform transformation primitive ]
   Traceable
   (trace [this _r]
     (let [^Ray r _r]
-      (if-let [[t p n] (trace primitive (transform r (inverse transform)))]
-        [t (transform-point p transform) (transform-normal n transform)])))
+      (if-let [[t p n] (trace primitive (transform r (inverse transformation)))]
+        [t (transform-point transformation p) (transform-normal transformation n)])))
 
   Bounded
   (bounding-box [this]
-    (transform (bounding-box primitive) transform)))
+    (transform (bounding-box primitive) transformation)))
 
 (defn instance [^Transform T primitive]
   "Create an instanced primitive"
