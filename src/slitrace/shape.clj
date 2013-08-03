@@ -1,5 +1,5 @@
 (ns slitrace.shape
-  (:use [slimath core]
+  (:use [slimath core vec matrix]
         [sligeom core]
         [sligeom transform bounding]
         [sligeom.intersect :only [ray-at 

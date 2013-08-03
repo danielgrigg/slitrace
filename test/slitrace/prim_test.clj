@@ -1,6 +1,6 @@
 (ns slitrace.prim-test
   (:use midje.sweet
-        slimath.core
+        [slimath core vec matrix]
         [sligeom core transform]
         [sligeom.intersect :only [ray ray-at ray-interval]]
         [slitrace core shape prim]))

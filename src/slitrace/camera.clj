@@ -1,5 +1,5 @@
 (ns slitrace.camera
-  (:use [slimath core]
+  (:use [slimath core vec matrix]
         [sligeom core transform intersect])
   (:import [sligeom.transform Transform]))
 
