@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "LATEST"]
                  [sligeom "LATEST"]]
   :profiles {:dev {:dependencies [[midje "1.5.0"]]
-                   :plugins [[lein-midje "3.1.0"]]}})  
+                  :plugins [[lein-midje "3.1.0"]]}
+                   })
