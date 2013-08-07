@@ -20,26 +20,26 @@
   "Create an instanced primitive"
   (Instance. T primitive))
 
-(deftype ListGroup [^Transform transform ^BBox bounds primitives]
+(deftype ListGroup [^Transform transformation ^BBox bounds primitives]
   Traceable
   (trace [this _r]
     (let [^Ray r _r
-          ^Ray r-local (transform r (inverse transform))
+          ^Ray r-local (transform r (inverse transformation))
           [tn pn nn] (reduce (fn [[t0 _ _ :as s1] prim]
                                (if-let [s2 (trace prim (ray-interval r-local t0))] s2 s1))
                              [(.maxt r-local) nil nil]
                              primitives)]
       (if pn
-        [tn (transform-point pn transform) 
-         (transform-normal nn transform)]))))
+        [tn (transform-point pn transformation) 
+         (transform-normal nn transformation)]))))
 
 ;; TODO - bounding box
-(defn- list-group [^Transform transform primitives]
+(defn- list-group [^Transform transformation primitives]
   "Create a primitive group as a list"
-  (ListGroup. transform nil primitives))
+  (ListGroup. transformation nil primitives))
 
 ;; TODO - choose a grouping strategy based on primitives
-(defn group [^Transform transform primitives]
+(defn group [^Transform transformation primitives]
   "Create a primitive group"
-  (list-group transform primitives))
+  (list-group transformation primitives))
 

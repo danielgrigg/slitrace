@@ -1,35 +1,32 @@
 (ns slitrace.shape
-  (:use [slimath core]
+  (:use [slimath core vec matrix]
         [sligeom core]
         [sligeom transform bounding]
-        [sligeom.intersect :only [ray-at 
-                                  intersect-sphere-ray 
-                                  intersect-triangle-ray]]
-        [slitrace core]))
+        [sligeom.intersect ]
+        [slitrace core])
+  (:import [sligeom.bounding BBox]
+           [sligeom.intersect Sphere Triangle Plane]))
 
-(defrecord Sphere [^double radius]
+(extend-type Sphere
   Traceable
   (trace [this _r]
     (let [^Ray r _r]
-      (if-let [t (intersect-sphere-ray radius r)]
+      (if-let [t (intersect-sphere-ray (:radius this) r)]
         (let [p (ray-at r t)
               n (v4sub p (point3 0 0 0))]
-          [t p n]))))
-  Bounded
-  (bounding-box [this]
-    (bbox (point3 (- radius) (- radius) (- radius))
-          (point3 radius radius radius))))
+          [t p n])))))
 
-(defn sphere [^double radius] (Sphere. radius))
-
-(defrecord Triangle [p0 p1 p2]
+(extend-type Triangle
   Traceable
   (trace [this r]
     (let [^Ray _r r]
-      ((intersect-triangle-ray p0 p1 p2 _r)) 0))
+      ((intersect-triangle-ray (:p0 this) (:p1 this) (:p2 this) _r)) 0)))
 
-  Bounded
-  (bounding-box [this]
-    (bbox-union (bbox p0 p1) p2)))
-
-(defn triangle [p0 p1 p2] (Triangle. p0 p1 02))
+(extend-type BBox
+  Traceable
+  (trace [this _r]
+  (let [^Ray r _r]
+    (if-let [t (intersect-bbox-ray this r)]
+      (let [p (ray-at r t)
+            n (v4sub p (point3 0 0 0))]
+        [t p n])))))
