@@ -30,8 +30,8 @@
                              [(.maxt r-local) nil nil]
                              primitives)]
       (if pn
-        [tn (transform-point pn transformation) 
-         (transform-normal nn transformation)]))))
+        [tn (transform-point transformation pn) 
+         (transform-normal transformation nn)]))))
 
 ;; TODO - bounding box
 (defn- list-group [^Transform transformation primitives]
