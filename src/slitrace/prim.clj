@@ -1,9 +1,10 @@
 (ns slitrace.prim
   (:use [slitrace core]
-        [sligeom core bounding transform intersect])
+        [sligeom core bounding transform intersect aggregate])
   (:import [sligeom.intersect Ray]
            [sligeom.bounding BBox]
-           [sligeom.transform Transform]))
+           [sligeom.transform Transform]
+           [sligeom.aggregate Grid]))
 
 (defrecord Instance [^Transform transformation primitive ]
   Traceable
@@ -40,6 +41,12 @@
 
 ;; TODO - choose a grouping strategy based on primitives
 (defn group [^Transform transformation primitives]
-  "Create a primitive group"
+  "Create a primitive group":pwd
   (list-group transformation primitives))
+
+(defrecord GridGroup [^Transform transformation ^Grid grid]
+  Traceable
+  (trace [this _r]
+         nil
+         ))
 

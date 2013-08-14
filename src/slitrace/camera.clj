@@ -1,6 +1,7 @@
 (ns slitrace.camera
   (:use [slimath core vec matrix]
-        [sligeom core transform intersect])
+        [sligeom core transform intersect]
+        [sliimp core])
   (:import [sligeom.transform Transform]))
 
 (defrecord Camera [^long width ^long height 
@@ -31,5 +32,5 @@ camera-to-screen transform."
 (defn screen-projection-transform
   "Concatenated screen-projection transformation for a camera"
  [^Camera camera]
-  (compose (screen-transform (:width camera) (:height camera))
+  (compose (window-transform (:width camera) (:height camera))
                     (:projection camera)))

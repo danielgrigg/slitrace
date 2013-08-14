@@ -19,8 +19,12 @@
 (extend-type Triangle
   Traceable
   (trace [this r]
-    (let [^Ray _r r]
-      ((intersect-triangle-ray (:p0 this) (:p1 this) (:p2 this) _r)) 0)))
+    (let [^Ray _r r
+          [t u v] (intersect-triangle-ray (:p0 this) (:p1 this) (:p2 this) _r) ]
+      [ t (ray-at r t) 
+      (-> (cross (v3sub (:p1 this) (:p0 this)) (v3sub (:p2 this) (:p0 this)))
+          v3normalize 
+          vector3)])))
 
 (extend-type BBox
   Traceable
