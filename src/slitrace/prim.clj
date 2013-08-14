@@ -21,15 +21,20 @@
   "Create an instanced primitive"
   (Instance. T primitive))
 
+
+(defn trace-list "trace a primitive seq" [ray primitives]
+  (let [trace-sorted (fn [[t _ _ :as closest-geometry] prim ]
+                       (or (trace prim (ray-interval ray t)) closest-geometry))]
+    (reduce trace-sorted [(:maxt ray) nil nil] primitives)))
+
+
+
 (deftype ListGroup [^Transform transformation ^BBox bounds primitives]
   Traceable
   (trace [this _r]
     (let [^Ray r _r
           ^Ray r-local (transform r (inverse transformation))
-          [tn pn nn] (reduce (fn [[t0 _ _ :as s1] prim]
-                               (if-let [s2 (trace prim (ray-interval r-local t0))] s2 s1))
-                             [(.maxt r-local) nil nil]
-                             primitives)]
+          [tn pn nn] (trace-list r-local primitives)]
       (if pn
         [tn (transform-point transformation pn) 
          (transform-normal transformation nn)]))))
@@ -49,4 +54,9 @@
   (trace [this _r]
          nil
          ))
+(comment 
+  (use '[slitrace core shape prim]) 
+  (use '[sligeom core bounding transform intersect aggregate])
+  (defn test-grid [] (grid (bbox (point3 0 0 0) (point3 9 9 9)) 1))
+  (map #(voxel-idx G)))
 
