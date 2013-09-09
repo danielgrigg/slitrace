@@ -1,5 +1,6 @@
 (ns slitrace.prim
-  (:use [slitrace core]
+  (:use [slimath core vec]
+        [slitrace core]
         [sligeom core bounding transform intersect aggregate])
   (:import [sligeom.intersect Ray]
            [sligeom.bounding BBox]
@@ -30,10 +31,10 @@
 
 (defn trace-grid [r g]
   (->> (grid-seq g r)
-	   (map #(voxel-idx % g))
-	   (map (:voxels g))
-	   (map (partial trace-list r))
-           (some identity)))
+       (map #(voxel-idx % g))
+       (map (:voxels g))
+       (map (partial trace-list r))
+       (some identity)))
 
 (defrecord Group [^Transform transformation ^BBox bounds primitives trace-fn]
   Traceable
@@ -54,8 +55,10 @@
   (Group. transformation (bbox primitives) primitives trace-list))
 
 (defn grid-group [^Transform transformation primitives]
+;; adding a unit border is the simplest way to prevent boundary problems
   (let [g (reduce grid-conj 
-                  (grid (bbox primitives) (count primitives))
+                  (grid (bbox-border [1 1 1] (bbox primitives)) 
+                        (count primitives))
                   primitives)]
     (Group. transformation (bounding-box g) g trace-grid)))
 
